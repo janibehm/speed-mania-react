@@ -19,7 +19,8 @@
   box-sizing: border-box;
 }
 
-body {
+/* body {
+  width:1680px;
   font-family: 'Dosis', sans-serif;
   background-image: linear-gradient(to right top, #ca19d0, #ffee00);
   background-attachment: fixed;
@@ -31,7 +32,7 @@ body {
   color: white;
   max-width: 1200px;
   background-image: url('./images/bg.jpg');
-}
+} */
 
 
 
@@ -85,3 +86,13 @@ button {
 .hidden{
   display: none;
 }
+
+.circles {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    justify-content: space-between;
+    border:2px solid black;
+    width:50vw;
+    height:30vh;
+  }

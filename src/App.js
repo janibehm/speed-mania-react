@@ -1,69 +1,80 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import './components/circle.css'
-import Circle from './components/circle';
+import './components/circle.css';
 import GameOver from './components/GameOver';
+import Circle from './components/circle';
 
-class App extends Component() {
+class App extends Component {
+  state = {
+    showGameOver: false,
+    active: 0,
+    rounds: 0,
+    circles: [
+      { id: 1, color: 'red' },
+      { id: 2, color: 'yellow' },
+      { id: 3, color: 'green' },
+      { id: 4, color: 'blue' },
+    ],
+  };
 
-    state = {
-      score: 0,
-      rounds:0,
-      showGameOver: false,
-      colors:["red", "blue", "green", "yellow"]
-      
+  getRndInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+  pickeNew = (active) => {
+    const nextActive = this.getRndInt(0, 3);
+    if (nextActive !== active) {
+      return nextActive;
     }
 
-    
+    return this.pickeNew(active);
+  };
 
-    endHandler(){
-      this.setState({
-        showGameOver:true
-      })
-    }  
-
-    clickHandler(){
-      this.setState({
-        score: +10
-      })
+  startGame = () => {
+    let { active, rounds } = this.state;
+    const nextActive = this.pickeNew(active);
+    let timer;
+    let pace = 1000;
+    if (rounds >= 10) {
+      return this.endGame();
     }
 
-    circleHandler(){
-      this.setState({
+    timer = setTimeout(this.startGame, pace);
+  };
 
-      })
-    }
+  endGame = () => {
+    console.log('game ended');
+    clearTimeout(this.timer);
+  };
 
-  
-  
-    render(){
+  render() {
+    const circles = this.state.circles.map((item) => (
+      <Circle key={item.id} color={item.color} />
+    ));
     return (
       <div className="App">
         <header className="App-header">
-        <div>
-        <div>
-          <h1>Speed Mania</h1>
-          <p>Score: <span class="score">0</span></p>
-        </div>
-        <div>
-          {this.state.colors.map((color)=> {
-             return <Circle key={color} color={color}/>
-          })
-           
-          }
-        </div>
-        {this.state.showGameOver} && <GameOver/>
-        <div>
-          <button id="start" >Start game</button>
-          <button id="end" class="hidden">End game</button>
-        </div>
-     
-      </div>
+          <div>
+            <div>
+              <h1>Speed Mania</h1>
+              <p>
+                Score: <span className="score">0</span>
+              </p>
+            </div>
+
+            {this.state.showGameOver && <GameOver />}
+            <div>
+              <button id="start" onClick={this.startGame}>
+                Start game
+              </button>
+              <button id="end" className="hidden" onClick={this.endGame}>
+                End game
+              </button>
+            </div>
+            <div className="circles">{circles}</div>
+          </div>
         </header>
       </div>
     );
   }
-  }
-  
+}
 
 export default App;

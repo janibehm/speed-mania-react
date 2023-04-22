@@ -1,9 +1,10 @@
+import React from 'react'
 import './circle.css'
 
-const Circle = () => {
+const Circle = (props) => {
   
-    return(
-        <div className='circle' style={{backgroundColor: color}}></div>
+    return (
+        <div className='circle' style={{ backgroundColor: props.color }}></div>
         
     )
 }

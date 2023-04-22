@@ -1,11 +1,4 @@
-.circles {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 auto;
-    justify-content: space-between;
-  }
-  
-  .circle {
+.circle {
     background-color: rgb(1, 28, 28);
     border-radius: 50%;
     width: 100px;
@@ -15,7 +8,6 @@
     align-items: center;
     margin: 1rem;
     pointer-events: none;
-    filter: brightness(30%);
   }
   
   #circle1 {
