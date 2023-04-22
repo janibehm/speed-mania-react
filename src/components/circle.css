@@ -1,0 +1,39 @@
+.circles {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    justify-content: space-between;
+  }
+  
+  .circle {
+    background-color: rgb(1, 28, 28);
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem;
+    pointer-events: none;
+    filter: brightness(30%);
+  }
+  
+  #circle1 {
+    background-color: green;
+  } 
+  
+  #circle2 {
+    background-color: yellow;
+  } 
+  
+  #circle3 {
+    background-color: orange;
+  } 
+  
+  #circle4 {
+    background-color: red;
+  } 
+  
+  .circle.active {
+    filter: brightness(100%);
+  }
