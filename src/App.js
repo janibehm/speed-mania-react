@@ -20,10 +20,15 @@ class App extends Component {
     ],
   };
 
-  clickCircles = () => {
-    this.state({circles:'black'})
-  }
- 
+/*   clickCircles = (id) => {
+    const newCircles = this.state.circles.map(circle => {
+      if (circle.id === id) {
+        return { ...circle, color: 'black' };
+      }
+      return circle;
+    });
+    this.setState({ circles: newCircles });
+  } */
   
   getRndInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
@@ -41,6 +46,8 @@ class App extends Component {
     const nextActive = this.pickeNew(active);
     active = nextActive;
     console.log(active, rounds, pace)
+
+
     
     if (rounds >= 10) {
       return this.endGame();
@@ -65,11 +72,12 @@ class App extends Component {
   }
  */
   render() {
+    
     const {circles,activeCircle} = this.state;
-    circles.map((item) => (
+    const circleComponents = circles.map((item) => (
       <Circle 
       key={item.id} 
-      color={item.color}
+      color={activeCircle === item.id ? item.color : ''}
       active={activeCircle === item.id}
       />
     ));
@@ -83,8 +91,8 @@ class App extends Component {
                 Score: <span className="score">0</span>
               </p>
             </div>
-
-            {this.state.showGameOver && <GameOver />}
+            
+            {this.state.showGameOver ? <GameOver /> : null}
             <div>
               <button id="start" onClick={this.startGame}>
                 Start game
@@ -93,7 +101,8 @@ class App extends Component {
                 End game
               </button>
             </div>
-            <div className="circles">{circles}</div>
+            
+            <div className="circles">{circleComponents}</div>
           </div>
         </header>
       </div>
