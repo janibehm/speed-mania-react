@@ -19,13 +19,18 @@ class App extends Component {
       { id: 4, color: 'blue' },
     ],
   };
+
+  clickCircles = () => {
+    this.state({circles:'black'})
+  }
+ 
   
   getRndInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
   pickeNew = (active) => {
-    const nextActive = this.getRndInt(0, 3);
-    if (nextActive !== active) {
-      return nextActive;
+    const nextActiveNumber = this.getRndInt(0, 4);
+    if (nextActiveNumber !== active) {
+      return nextActiveNumber;
     }
 
     return this.pickeNew(active);
@@ -35,6 +40,7 @@ class App extends Component {
     let { active, rounds, pace } = this.state;
     const nextActive = this.pickeNew(active);
     active = nextActive;
+    console.log(active, rounds, pace)
     
     if (rounds >= 10) {
       return this.endGame();
@@ -59,11 +65,12 @@ class App extends Component {
   }
  */
   render() {
-    const circles = this.state.circles.map((item) => (
+    const {circles,activeCircle} = this.state;
+    circles.map((item) => (
       <Circle 
       key={item.id} 
       color={item.color}
-      active={this.state.activeCircle === item.id}
+      active={activeCircle === item.id}
       />
     ));
     return (
