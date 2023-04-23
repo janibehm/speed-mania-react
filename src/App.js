@@ -41,7 +41,7 @@ class App extends Component {
     }
 
     const timer = setTimeout(this.startGame,pace);
-    this.setState({timer,pace: pace -10, rounds:rounds +1})
+    this.setState({timer,pace: pace -10, rounds:rounds +1, activeCircle:active})
     
     
   };
@@ -49,6 +49,7 @@ class App extends Component {
   endGame = () => {
     console.log('game ended');
     this.setState({timer:null, rounds:0})
+    this.setState({activeCircle:null})
   };
 
 /*   clickCircle = (i) => {
