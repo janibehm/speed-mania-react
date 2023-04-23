@@ -9,6 +9,9 @@ class App extends Component {
     showGameOver: false,
     active: 0,
     rounds: 0,
+    pace:1000,
+    timer:null,
+    activeCircle:null,
     circles: [
       { id: 1, color: 'red' },
       { id: 2, color: 'yellow' },
@@ -16,7 +19,7 @@ class App extends Component {
       { id: 4, color: 'blue' },
     ],
   };
-
+  
   getRndInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
   pickeNew = (active) => {
@@ -29,25 +32,38 @@ class App extends Component {
   };
 
   startGame = () => {
-    let { active, rounds } = this.state;
+    let { active, rounds, pace } = this.state;
     const nextActive = this.pickeNew(active);
-    let timer;
-    let pace = 1000;
+    active = nextActive;
+    
     if (rounds >= 10) {
       return this.endGame();
     }
 
-    timer = setTimeout(this.startGame, pace);
+    const timer = setTimeout(this.startGame,pace);
+    this.setState({timer,pace: pace -10, rounds:rounds +1})
+    
+    
   };
 
   endGame = () => {
     console.log('game ended');
-    clearTimeout(this.timer);
+    this.setState({timer:null, rounds:0})
   };
 
+/*   clickCircle = (i) => {
+      if(i !== active){
+        return this.endGame()
+      }
+  }
+ */
   render() {
     const circles = this.state.circles.map((item) => (
-      <Circle key={item.id} color={item.color} />
+      <Circle 
+      key={item.id} 
+      color={item.color}
+      active={this.state.activeCircle === item.id}
+      />
     ));
     return (
       <div className="App">
