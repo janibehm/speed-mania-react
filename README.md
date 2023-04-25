@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Speed Mania
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This React app is a game where you have to click active circles to gain points and become Speed Maniac!
 
 ## Available Scripts
 
