@@ -12,23 +12,15 @@ class App extends Component {
     pace:1000,
     timer:null,
     activeCircle:null,
+  /*   clicked: false, */
     circles: [
       { id: 1, color: 'red' },
       { id: 2, color: 'yellow' },
       { id: 3, color: 'green' },
       { id: 4, color: 'blue' },
-    ],
+    ]
   };
 
-/*   clickCircles = (id) => {
-    const newCircles = this.state.circles.map(circle => {
-      if (circle.id === id) {
-        return { ...circle, color: 'black' };
-      }
-      return circle;
-    });
-    this.setState({ circles: newCircles });
-  } */
   
   getRndInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
@@ -65,20 +57,34 @@ class App extends Component {
     this.setState({activeCircle:null})
   };
 
-/*   clickCircle = (i) => {
-      if(i !== active){
-        return this.endGame()
-      }
+ /*  clickCircle = () => {
+    if (this.item.id !== active) {
+      return endGame()
+    } */
+
+  handleCircleClick = () => {
+    /* if (this.item.id !== active) {
+      return endGame() */
+    
   }
- */
+
+  enableCircles = () => {
+    const { circles } = this.state
+  
+    circles.forEach((circle) => {
+      circle.style.pointerEvents = 'auto'
+    })
+  }
+ 
   render() {
     
     const {circles,activeCircle} = this.state;
-    const circleComponents = circles.map((item) => (
+    const circleComponents = circles.map((item, index) => (
       <Circle 
       key={item.id} 
       color={activeCircle === item.id ? item.color : ''}
       active={activeCircle === item.id}
+      onClick={() => this.handleCircleClick}
       />
     ));
     return (
