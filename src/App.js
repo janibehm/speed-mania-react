@@ -72,9 +72,9 @@ class App extends Component {
 
   clickHandler = (id) => {
     console.log(id);
-    if(item.id !== active){
-      this.endGame()
-    }
+   /*  if(){
+
+    } */
   }
 
   render() {
@@ -85,7 +85,8 @@ class App extends Component {
       key={item.id} 
       color={activeCircle === item.id ? item.color : ''}
       active={activeCircle === item.id}
-      onClick={() => this.clickHandler(item.id)} 
+      onClick={(item) => this.clickHandler(item.id)}
+      /* onClick={() => this.clickHandler(item.id)}  */
       />
     ));
     return (
@@ -109,7 +110,8 @@ class App extends Component {
               </button>
             </div>
             
-            <div className="circles">{circleComponents}</div>
+            <div className="circles" 
+              /* onClick={(item) => this.clickHandler(item)} */>{circleComponents}</div>
           </div>
         </header>
       </div>
