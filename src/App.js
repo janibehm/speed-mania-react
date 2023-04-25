@@ -6,6 +6,7 @@ import Circle from './components/circle';
 
 class App extends Component {
   state = {
+   /*  activeElement:null, */
     showGameOver: false,
     active: 0,
     rounds: 0,
@@ -21,6 +22,7 @@ class App extends Component {
     ]
   };
 
+  
   getRndInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
   pickNew = (active) => {
@@ -54,6 +56,8 @@ class App extends Component {
     const timer = setTimeout(this.startGame,pace);
     this.setState({timer,pace: pace -10, rounds:rounds +1, activeCircle:active})
     
+    this.clickHandler = this.clickHandler.bind(this);
+   
     
   };
 
@@ -71,11 +75,11 @@ class App extends Component {
   }
 
   clickHandler = (id) => {
+    console.log(this.setState({ clicked: id }))
     console.log(id);
-   /*  if(){
-
-    } */
+    this.setState({ clicked: id }); 
   }
+
 
   render() {
 
@@ -85,8 +89,8 @@ class App extends Component {
       key={item.id} 
       color={activeCircle === item.id ? item.color : ''}
       active={activeCircle === item.id}
-      onClick={(item) => this.clickHandler(item.id)}
-      /* onClick={() => this.clickHandler(item.id)}  */
+      onClick={() => this.clickHandler(item.id)}
+    
       />
     ));
     return (
@@ -110,8 +114,8 @@ class App extends Component {
               </button>
             </div>
             
-            <div className="circles" 
-              /* onClick={(item) => this.clickHandler(item)} */>{circleComponents}</div>
+            <div className="circles" /* onClick={(item) => this.clickHandler(item)} */ >{circleComponents}</div>
+        
           </div>
         </header>
       </div>
