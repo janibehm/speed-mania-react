@@ -12,7 +12,7 @@ class App extends Component {
     pace:1000,
     timer:null,
     activeCircle:null,
-  /*   clicked: false, */
+    clicked: false,
     circles: [
       { id: 1, color: 'red' },
       { id: 2, color: 'yellow' },
@@ -21,7 +21,6 @@ class App extends Component {
     ]
   };
 
-  
   getRndInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
   pickNew = (active) => {
@@ -33,13 +32,13 @@ class App extends Component {
     return this.pickNew(active);
   };
 
-/*   enableCircles = () => {
+  /*   enableCircles = () => {
     const { circles } = this.state
   
     circles.forEach((circle) => {
       circle.style.pointerEvents = 'auto'
     })
-  } */
+  }  */
 
   startGame = () => {
     let { active, rounds, pace } = this.state;
@@ -47,8 +46,7 @@ class App extends Component {
     active = nextActive;
     console.log(active, rounds, pace)
 
-   /*  this.enableCircles(); */
-
+   /*  this.enableCircles();  */
     if (rounds >= 10) {
       return this.endGame();
     }
@@ -65,29 +63,29 @@ class App extends Component {
     this.setState({activeCircle:null})
   };
 
- /*  clickCircle = () => {
-    if (this.item.id !== active) {
-      return endGame()
-    } */
-
-  handleCircleClick = () => {
-    console.log('clicked circle')
-    
+  modalHandler = (e) => {
+    e.preventDefault()
+    this.setState({
+      showModal: !this.state.showModal
+    })
   }
 
-  changeHandler = (e) => {
-   
+  clickHandler = (id) => {
+    console.log(id);
+    if(item.id !== active){
+      this.endGame()
+    }
   }
 
   render() {
-    
+
     const {circles,activeCircle} = this.state;
     const circleComponents = circles.map((item) => (
       <Circle 
       key={item.id} 
       color={activeCircle === item.id ? item.color : ''}
       active={activeCircle === item.id}
-      onClick={(item) => this.handleCircleClick(item)}
+      onClick={() => this.clickHandler(item.id)} 
       />
     ));
     return (

@@ -1,8 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=New+Rocker&display=swap');
+
+
 .App {
   text-align: center;
 }
 
 .App-header {
+  font-family: 'New Rocker', cursive;
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -11,6 +15,8 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  background: rgb(34,193,195);
+  background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%); 
 }
 
 * {
@@ -19,25 +25,8 @@
   box-sizing: border-box;
 }
 
-/* body {
-  width:1680px;
-  font-family: 'Dosis', sans-serif;
-  background-image: linear-gradient(to right top, #ca19d0, #ffee00);
-  background-attachment: fixed;
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  color: white;
-  max-width: 1200px;
-  background-image: url('./images/bg.jpg');
-} */
-
-
 
 button {
-  font-family: inherit;
   font-size: inherit;
   background-color: #f3f3f3;
   padding: 0.5rem 1rem;
@@ -92,7 +81,6 @@ button {
     flex-wrap: wrap;
     margin: 0 auto;
     justify-content: space-between;
-    border:2px solid black;
     width:50vw;
     height:30vh;
   }
