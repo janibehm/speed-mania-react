@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
 import './components/circle.css';
-import GameOver from './components/GameOver';
+import Modal from './components/Modal';
 import Circle from './components/circle';
 
 class App extends Component {
   state = {
    /*  activeElement:null, */
-    showGameOver: false,
+    showModal: false,
     active: 0,
     rounds: 0,
     pace:1000,
@@ -21,6 +21,8 @@ class App extends Component {
       { id: 4, color: 'blue' },
     ]
   };
+
+
 
   
   getRndInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
@@ -42,11 +44,11 @@ class App extends Component {
     })
   }  */
 
-  startGame = () => {
+  startGame = (id) => {
     let { active, rounds, pace } = this.state;
     const nextActive = this.pickNew(active);
     active = nextActive;
-    console.log(active, rounds, pace)
+    console.log(`active ${active}, rounds ${rounds}, pace ${pace}`)
 
    /*  this.enableCircles();  */
     if (rounds >= 10) {
@@ -63,7 +65,7 @@ class App extends Component {
 
   endGame = () => {
     console.log('game ended');
-    this.setState({timer:null, rounds:0})
+    this.setState({timer:null, rounds:10})
     this.setState({activeCircle:null})
   };
 
@@ -74,23 +76,26 @@ class App extends Component {
     })
   }
 
-  clickHandler = (id) => {
+  clickHandler = (active,id) => {
     console.log(this.setState({ clicked: id }))
-    console.log(id);
     this.setState({ clicked: id }); 
+    console.log(`clickHandler id ${id}`);  
+    console.log(this.state.activeCircle);
+    if(active !== id){
+      this.endGame()
+    }
   }
-
 
   render() {
 
     const {circles,activeCircle} = this.state;
     const circleComponents = circles.map((item) => (
-      <Circle 
-      key={item.id} 
-      color={activeCircle === item.id ? item.color : ''}
-      active={activeCircle === item.id}
-      onClick={() => this.clickHandler(item.id)}
-    
+      <Circle
+        key={item.id}
+        color={activeCircle === item.id ? item.color : ""}
+        active={activeCircle === item.id}
+        id={item.id}
+        onClick={this.clickHandler}
       />
     ));
     return (
@@ -104,7 +109,7 @@ class App extends Component {
               </p>
             </div>
             
-            {this.state.showGameOver ? <GameOver /> : null}
+            {this.state.showGameOver ? <Modal /> : null}
             <div>
               <button id="start" onClick={this.startGame}>
                 Start game
@@ -114,7 +119,8 @@ class App extends Component {
               </button>
             </div>
             
-            <div className="circles" /* onClick={(item) => this.clickHandler(item)} */ >{circleComponents}</div>
+            <div className="circles">{circleComponents}</div>
+            {this.state.showModal && <Modal closeModal={this.modalHandler}/>}
         
           </div>
         </header>
