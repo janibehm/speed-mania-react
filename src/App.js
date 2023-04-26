@@ -114,7 +114,7 @@ class App extends Component {
               </div>
              
               <p>
-                Score: <span className="score">0</span>
+                Score: <span className="score">{this.state.score}</span>
               </p>
             </div>
             
