@@ -8,23 +8,3 @@
     align-items: center;
     margin: 1rem;
   }
-  
-  #circle1 {
-    background-color: green;
-  } 
-  
-  #circle2 {
-    background-color: yellow;
-  } 
-  
-  #circle3 {
-    background-color: orange;
-  } 
-  
-  #circle4 {
-    background-color: red;
-  } 
-  
-  .circle.active {
-    filter: brightness(100%);
-  }

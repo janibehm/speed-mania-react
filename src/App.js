@@ -110,7 +110,7 @@ class App extends Component {
             <div>
               <h1>Speed Mania</h1>
               <div className='modalContainer'>
-              {this.state.showModal && <Modal closeModal={this.modalHandler} />}
+              {this.state.showModal && <Modal closeModal={this.modalHandler} score={this.state.score} />}
               </div>
              
               <p>

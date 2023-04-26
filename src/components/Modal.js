@@ -1,12 +1,12 @@
 import styles from './Modal.module.css'
 
-const Modal = (props) => {
+const Modal = ({closeModal,score}) => {
     return (  
     <div className={styles.overlay}>
     <div className={styles.modal}>
-        <button className='close' onClick={props.closeModal}>X</button>
+        <button className='close' onClick={closeModal}>X</button>
       <p>Ups, game over!</p>
-      <p>Your score was <span className="scoreEnd">0</span></p>
+      <p>Your score was <span>{score}</span></p>
   </div>
   </div>
   )
