@@ -6,7 +6,8 @@ import Circle from './components/circle';
 
 class App extends Component {
   state = {
-   /*  activeElement:null, */
+    score:0,
+    gameRunning:false,
     showModal: false,
     active: 0,
     rounds: 0,
@@ -45,10 +46,11 @@ class App extends Component {
   }  */
 
   startGame = (id) => {
-    let { active, rounds, pace } = this.state;
+    this.setState({gameRunning:true})
+    let { active, rounds, pace, score } = this.state;
     const nextActive = this.pickNew(active);
     active = nextActive;
-    console.log(`active ${active}, rounds ${rounds}, pace ${pace}`)
+    console.log(`active ${active}, rounds ${rounds}, pace ${pace} score ${score}`)
 
    /*  this.enableCircles();  */
     if (rounds >= 10) {
@@ -56,7 +58,7 @@ class App extends Component {
     }
 
     const timer = setTimeout(this.startGame,pace);
-    this.setState({timer,pace: pace -10, rounds:rounds +1, activeCircle:active})
+    this.setState({timer,pace: pace -10, rounds:rounds +1, score:score +10 ,activeCircle:active})
     
     this.clickHandler = this.clickHandler.bind(this);
    
@@ -64,19 +66,20 @@ class App extends Component {
   };
 
   endGame = () => {
+    this.setState({gameRunning:false,showModal:true})
     console.log('game ended');
-    this.setState({timer:null, rounds:10})
-    this.setState({activeCircle:null})
+    this.setState({timer: null, rounds: 10, activeCircle: null, showModal: true});
+
   };
 
   modalHandler = (e) => {
-    e.preventDefault()
     this.setState({
       showModal: !this.state.showModal
     })
   }
 
   clickHandler = (id) => {
+    this.setState({score:+10})
     console.log(`clickHandler id ${id}`);  
     console.log(this.state.activeCircle);
     if (id !== this.state.activeCircle) {
@@ -94,7 +97,9 @@ class App extends Component {
       color={activeCircle === item.id ? item.color : ""}
       active={activeCircle === item.id}
       id={item.id}
+      gameRunning={this.state.gameRunning}
       onClick={() => this.clickHandler(item.id)}
+      
     />
     
     ));
@@ -109,7 +114,8 @@ class App extends Component {
               </p>
             </div>
             
-            {this.state.showGameOver ? <Modal /> : null}
+            {this.state.showModal && <Modal closeModal={this.modalHandler} />}
+
             <div>
               <button id="start" onClick={this.startGame}>
                 Start game
@@ -120,7 +126,7 @@ class App extends Component {
             </div>
             
             <div className="circles">{circleComponents}</div>
-            {this.state.showModal && <Modal closeModal={this.modalHandler}/>}
+          
         
           </div>
         </header>
