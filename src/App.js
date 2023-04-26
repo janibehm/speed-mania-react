@@ -10,7 +10,7 @@ class App extends Component {
     showModal: false,
     active: 0,
     rounds: 0,
-    pace:1000,
+    pace:1500,
     timer:null,
     activeCircle:null,
     clicked: false,
@@ -76,27 +76,27 @@ class App extends Component {
     })
   }
 
-  clickHandler = (active,id) => {
-    console.log(this.setState({ clicked: id }))
-    this.setState({ clicked: id }); 
+  clickHandler = (id) => {
     console.log(`clickHandler id ${id}`);  
     console.log(this.state.activeCircle);
-    if(active !== id){
-      this.endGame()
+    if (id !== this.state.activeCircle) {
+      this.endGame();
     }
-  }
+  };
+  
 
   render() {
 
     const {circles,activeCircle} = this.state;
     const circleComponents = circles.map((item) => (
       <Circle
-        key={item.id}
-        color={activeCircle === item.id ? item.color : ""}
-        active={activeCircle === item.id}
-        id={item.id}
-        onClick={this.clickHandler}
-      />
+      key={item.id}
+      color={activeCircle === item.id ? item.color : ""}
+      active={activeCircle === item.id}
+      id={item.id}
+      onClick={() => this.clickHandler(item.id)}
+    />
+    
     ));
     return (
       <div className="App">
