@@ -11,3 +11,9 @@
   button{
     color: red;
   }
+
+  .overlay{
+    background-color: slategray;
+    width: 80%;
+    height: 500px;
+  }

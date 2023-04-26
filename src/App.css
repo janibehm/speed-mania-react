@@ -36,41 +36,7 @@ button {
   cursor: pointer;
 }
 
-.overlay {
-  visibility: hidden;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  z-index: 100;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-.modal {
-  background-color: white;
-  padding: 2rem;
-  width: 40%;
-  height: 25%;
-  border-radius: 10px;
-  position: relative;
-  color: black;
-}
-
-.modal button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: transparent;
-  margin: 0;
-}
-
-.modal .score {
-  font-size: 1.5rem;
-}
 
 .hidden{
   display: none;
@@ -83,4 +49,9 @@ button {
     justify-content: space-between;
     width:50vw;
     height:30vh;
+  }
+
+  .modalContainer {
+    display: flex;
+    justify-content: center;
   }
