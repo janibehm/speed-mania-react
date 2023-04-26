@@ -58,7 +58,7 @@ class App extends Component {
     }
 
     const timer = setTimeout(this.startGame,pace);
-    this.setState({timer,pace: pace -10, rounds:rounds +1, score:score +10 ,activeCircle:active})
+    this.setState({timer,pace: pace -10, rounds:rounds +1,activeCircle:active})
     
     this.clickHandler = this.clickHandler.bind(this);
    
@@ -79,12 +79,12 @@ class App extends Component {
   }
 
   clickHandler = (id) => {
-    this.setState({score:+10})
     console.log(`clickHandler id ${id}`);  
     console.log(this.state.activeCircle);
     if (id !== this.state.activeCircle) {
       this.endGame();
     }
+    else{this.setState({score:this.state.score +10})}
   };
   
 
@@ -114,7 +114,7 @@ class App extends Component {
               </div>
              
               <p>
-                Score: <span className="score">0</span>
+                Score: <span className="score">{this.state.score}</span>
               </p>
             </div>
             
