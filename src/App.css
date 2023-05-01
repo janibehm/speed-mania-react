@@ -47,11 +47,12 @@ button {
     flex-wrap: wrap;
     margin: 0 auto;
     justify-content: space-between;
-    width:40vw;
+   
     height:30vh;
   }
 
-  .modalContainer {
+/*   .modalContainer {
     display: flex;
     justify-content: center;
-  }
+    width:30vw;
+  } */

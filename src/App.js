@@ -11,7 +11,7 @@ class App extends Component {
     showModal: false,
     active: 0,
     rounds: 0,
-    pace:1500,
+    pace:1000,
     timer:null,
     activeCircle:null,
     clicked: false,
@@ -103,11 +103,12 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
+        {this.state.showModal && <Modal closeModal={this.modalHandler} score={this.state.score} />}
           <div>
             <div>
               <h1>Speed Mania</h1>
-              <div className='modalContainer'>
-              {this.state.showModal && <Modal closeModal={this.modalHandler} score={this.state.score} />}
+             {/*  <div className='modalContainer'> */}
+            
               </div>
              
               <p>
@@ -123,7 +124,7 @@ class App extends Component {
               </button>
             </div>
             <div className="circles">{circleComponents}</div>
-          </div>
+     {/*      </div> */}
         </header>
       </div>
     );

@@ -8,7 +8,7 @@ const Modal = ({closeModal,score}) => {
       <p>Ups, game over!</p>
       <p>Your score was <span>{score}</span></p>
   </div>
-  </div>
+   </div> 
   )
   
 }
