@@ -23,9 +23,6 @@ class App extends Component {
     ]
   };
 
-
-
-  
   getRndInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
   pickNew = (active) => {
@@ -117,9 +114,6 @@ class App extends Component {
                 Score: <span className="score">{this.state.score}</span>
               </p>
             </div>
-            
-           
-
             <div>
               <button id="start" onClick={this.startGame}>
                 Start game
@@ -128,10 +122,7 @@ class App extends Component {
                 End game
               </button>
             </div>
-            
             <div className="circles">{circleComponents}</div>
-          
-        
           </div>
         </header>
       </div>
