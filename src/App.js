@@ -107,10 +107,7 @@ class App extends Component {
           <div>
             <div>
               <h1>Speed Mania</h1>
-             {/*  <div className='modalContainer'> */}
-            
               </div>
-             
               <p>
                 Score: <span className="score">{this.state.score}</span>
               </p>
@@ -124,7 +121,6 @@ class App extends Component {
               </button>
             </div>
             <div className="circles">{circleComponents}</div>
-     {/*      </div> */}
         </header>
       </div>
     );

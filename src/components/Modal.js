@@ -5,7 +5,7 @@ const Modal = ({closeModal,score}) => {
     <div className={styles.overlay}>
     <div className={styles.modal}>
         <button className='close' onClick={closeModal}>X</button>
-      <p>Ups, game over!</p>
+      <p>Game Over!</p>
       <p>Your score was <span>{score}</span></p>
   </div>
    </div> 
