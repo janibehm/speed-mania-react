@@ -5,24 +5,29 @@ import Modal from './components/Modal';
 import Circle from './components/circle';
 
 class App extends Component {
-  state = {
-    score:0,
-    gameRunning:false,
-    showModal: false,
-    active: 0,
-    rounds: 0,
-    pace:1000,
-    timer:null,
-    activeCircle:null,
-    clicked: false,
-    circles: [
-      { id: 1, color: 'red' },
-      { id: 2, color: 'yellow' },
-      { id: 3, color: 'green' },
-      { id: 4, color: 'blue' },
-    ]
-  };
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      score: 0,
+      gameRunning: false,
+      showModal: false,
+      active: 0,
+      rounds: 0,
+      pace: 1000,
+      timer: null,
+      activeCircle: null,
+      clicked: false,
+      circles: [
+        { id: 1, color: 'red' },
+        { id: 2, color: 'yellow' },
+        { id: 3, color: 'green' },
+        { id: 4, color: 'blue' },
+      ],
+    };
+
+    this.clickHandler = this.clickHandler.bind(this);
+  }
   getRndInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
   pickNew = (active) => {
@@ -34,38 +39,25 @@ class App extends Component {
     return this.pickNew(active);
   };
 
-  /*   enableCircles = () => {
-    const { circles } = this.state
-  
-    circles.forEach((circle) => {
-      circle.style.pointerEvents = 'auto'
-    })
-  }  */
 
-  startGame = (id) => {
+  startGame = () => {
     this.setState({gameRunning:true})
-    let { active, rounds, pace, score } = this.state;
+    let { active, rounds, pace, } = this.state;
     const nextActive = this.pickNew(active);
     active = nextActive;
-    console.log(`active ${active}, rounds ${rounds}, pace ${pace} score ${score}`)
 
-   /*  this.enableCircles();  */
     if (rounds >= 10) {
       return this.endGame();
     }
 
     const timer = setTimeout(this.startGame,pace);
-    this.setState({timer,pace: pace -10, rounds:rounds +1,activeCircle:active})
-    
-    this.clickHandler = this.clickHandler.bind(this);
-   
+    this.setState({timer,pace: pace -10, rounds:rounds +1,activeCircle:active, isLoading:false})
     
   };
 
   endGame = () => {
     this.setState({gameRunning:false,showModal:true})
-    console.log('game ended');
-    this.setState({timer: null, rounds: 10, activeCircle: null, showModal: true});
+    this.setState({timer: null, rounds: 10, activeCircle: null, showModal: true, isLoading:false});
 
   };
 
@@ -76,27 +68,27 @@ class App extends Component {
   }
 
   clickHandler = (id) => {
-    console.log(`clickHandler id ${id}`);  
-    console.log(this.state.activeCircle);
+    if (!this.state.gameRunning) {
+      return;
+    }
     if (id !== this.state.activeCircle) {
       this.endGame();
     }
     else{this.setState({score:this.state.score +10})}
   };
-  
 
   render() {
 
-    const {circles,activeCircle} = this.state;
+    const {circles,activeCircle, gameRunning} = this.state;
     const circleComponents = circles.map((item) => (
       <Circle
       key={item.id}
-      color={activeCircle === item.id ? item.color : ""}
+      color={activeCircle === item.id ? item.color : ''}
       active={activeCircle === item.id}
       id={item.id}
-      gameRunning={this.state.gameRunning}
-      onClick={() => this.clickHandler(item.id)}
-      
+      gameRunning={gameRunning}
+      onClick={gameRunning ? () => this.clickHandler(item.id) : null}
+      disabled={!gameRunning}
     />
     
     ));
@@ -113,18 +105,18 @@ class App extends Component {
               </p>
             </div>
             <div>
-              <button id="start" onClick={this.startGame}>
-                Start game
-              </button>
-              <button id="end" className="hidden" onClick={this.endGame}>
+             <button id="start" onClick={this.startGame}>
+              Start Game
+             </button>
+              <button id="end" className="hidden">
                 End game
               </button>
             </div>
-            <div className="circles">{circleComponents}</div>
+            <div className="circles">{circleComponents} </div>
         </header>
       </div>
     );
   }
-}
 
+}
 export default App;
