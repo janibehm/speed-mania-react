@@ -17,7 +17,6 @@ class App extends Component {
       pace: 1000,
       timer: null,
       activeCircle: null,
-      clicked: false,
       circles: [
         { id: 1, color: 'red' },
         { id: 2, color: 'yellow' },
@@ -28,6 +27,7 @@ class App extends Component {
 
     this.clickHandler = this.clickHandler.bind(this);
   }
+
   getRndInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
   pickNew = (active) => {
@@ -51,19 +51,20 @@ class App extends Component {
     }
 
     const timer = setTimeout(this.startGame,pace);
-    this.setState({timer,pace: pace -10, rounds:rounds +1,activeCircle:active, isLoading:false})
+    this.setState({timer,rounds:rounds +1,activeCircle:active})
+    console.log(rounds)
     
   };
 
   endGame = () => {
-    this.setState({gameRunning:false,showModal:true})
-    this.setState({timer: null, rounds: 10, activeCircle: null, showModal: true, isLoading:false});
-
+    this.setState({timer: null, rounds: 10, activeCircle: null, showModal: true,gameRunning:false});
   };
 
-  modalHandler = (e) => {
+  modalHandler = () => {
     this.setState({
-      showModal: !this.state.showModal
+      showModal: !this.state.showModal,
+      rounds:0,
+      score:0
     })
   }
 
