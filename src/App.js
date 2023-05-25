@@ -6,10 +6,6 @@ import Circle from './components/circle';
 import { ReactComponent as SpeakerOnIcon } from './SpeakerOnIcon.svg';
 import { ReactComponent as SpeakerOffIcon } from './SpeakerOffIcon.svg';
 
-
-/* import startGameSound from './sounds/startGame.mp3';
-import endGameSound from './sounds/endGame.mp3';
- */
 import backgroundMusic  from './sounds/backgroundMusic.mp3';
 import click from './sounds/click.wav';
 
@@ -26,10 +22,12 @@ class App extends Component {
       active: 0,
       rounds: 0,
       pace: 800,
-      olume: 0.5,
+      volume: 0.5,
       timer: null,
       activeCircle: null,
       isPlying: false,
+      counter:3,
+      displayGo: false,
       circles: [
         { id: 1, color: 'red' },
         { id: 2, color: 'yellow' },
@@ -40,9 +38,31 @@ class App extends Component {
 
     this.clickHandler = this.clickHandler.bind(this);
   }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalId);
+  }
+
+  startCountDown = () => {
+    this.setState({counter:3});
+    this.intervalId = setInterval(() => {
+      this.setState(prevState => {
+        if(prevState.counter < 1){
+          this.setState({displayGo:true});
+          setTimeout(() => {
+            this.startGame();
+          },1000)
+      
+          clearInterval(this.intervalId);
+        }
+        else{
+          return {counter:prevState.counter -1};
+        }
+      });
+    },1000);
+  }
+
   
-
-
   getRndInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
   pickNew = (activeCircle) => {
@@ -57,25 +77,25 @@ class App extends Component {
  
     musicBackground.play();
     musicBackground.loop = true;
-    this.setState({ gameRunning: true });
-    let { rounds, pace, circles, activeCircle } = this.state; 
+    this.setState({ gameRunning: true,displayGo:false });
+    let { rounds, pace, activeCircle } = this.state; 
     const nextActive = this.pickNew(activeCircle); 
   
-    if (rounds >= 10) {
+    if (rounds >= 50) {
       return this.endGame();
     }
   
-    const timer = setTimeout(this.startGame, pace);
+    const timer = setTimeout(() => {
+      if(this.state.gameRunning){
+        this.startGame();
+      }
+    }, pace);
+
     this.setState({ timer, rounds: rounds + 1, activeCircle: nextActive });
-    console.log(rounds);
-  
-    const activeCircleObject = circles.find((circle) => circle.id === nextActive); // find the circle with the nextActive id
-    if (activeCircleObject) {
-      console.log(activeCircleObject.color); 
-    }
+   
   };
   endGame = () => {
-    this.setState({timer: null, rounds: 10, activeCircle: null, showModal: true,gameRunning:false});
+    this.setState({timer: null, rounds: 0, activeCircle: null, showModal: true,gameRunning:false});
   };
 
   modalHandler = () => {
@@ -160,12 +180,20 @@ class App extends Component {
       <div onClick={this.musicHandler}>
              {this.state.isPlaying ? <SpeakerOffIcon width="50" height="50" /> :<SpeakerOnIcon width="50" height="50" /> }
             </div>
+    
               <p>
                 Score: <span className="score">{this.state.score}</span>
               </p>
+           
             </div>
             <div>
-             <button id="start" onClick={this.startGame}>
+            <p>
+              <span className="counter">
+                {this.state.counter > 0 ? this.state.counter : (this.state.displayGo ? "GO" : '')}
+              </span>
+            </p>
+          
+             <button id="start" onClick={this.startCountDown}>
               Start Game
              </button>
 
