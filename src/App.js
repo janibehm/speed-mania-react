@@ -9,8 +9,9 @@ import { ReactComponent as SpeakerOffIcon } from './SpeakerOffIcon.svg';
 
 /* import startGameSound from './sounds/startGame.mp3';
 import endGameSound from './sounds/endGame.mp3';
-import clickSound from './sounds/click.mp3'; */
+ */
 import backgroundMusic  from './sounds/backgroundMusic.mp3';
+import click from './sounds/click.wav';
 
 const musicBackground = new Audio(backgroundMusic);
 
@@ -25,6 +26,7 @@ class App extends Component {
       active: 0,
       rounds: 0,
       pace: 800,
+      olume: 0.5,
       timer: null,
       activeCircle: null,
       isPlying: false,
@@ -91,7 +93,11 @@ class App extends Component {
     if (id !== this.state.activeCircle) {
       this.endGame();
     }
-    else{this.setState({score:this.state.score +10})}
+    else{
+      const clickSound = new Audio(click);
+      clickSound.play();
+      this.setState({score:this.state.score +10})
+    }
     this.setState((prevState) => ({
       pace: prevState.pace -5,
     }));
@@ -108,6 +114,12 @@ class App extends Component {
       musicBackground.volume = 0;
     }
     this.setState({isPlaying: !isPlaying});
+  }
+
+  handleVolumeChange = (event) => {
+    const volume = event.target.value;
+    musicBackground.volume = volume;
+    this.setState({ volume });
   }
 
   render() {
@@ -133,6 +145,21 @@ class App extends Component {
             <div>
               <h1>Speed Mania</h1>
               </div>
+              <div>
+        <label htmlFor="volume">Music Volume: </label>
+        <input
+          id="volume"
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value={this.state.volume}
+          onChange={this.handleVolumeChange}
+        />
+      </div>
+      <div onClick={this.musicHandler}>
+             {this.state.isPlaying ? <SpeakerOffIcon width="50" height="50" /> :<SpeakerOnIcon width="50" height="50" /> }
+            </div>
               <p>
                 Score: <span className="score">{this.state.score}</span>
               </p>
@@ -142,12 +169,7 @@ class App extends Component {
               Start Game
              </button>
 
-             <div onClick={this.musicHandler}>
-             {this.state.isPlaying ? <SpeakerOffIcon width="50" height="50" /> :<SpeakerOnIcon width="50" height="50" /> }
-            </div>
-            {/*  <div onClick={this.handleIconClick}>
-             {this.state.isPlaying ? <SpeakerOnIcon /> : <SpeakerOffIcon />}
-            </div> */}
+           
               <button id="end" className="hidden">
                 End game
               </button>
