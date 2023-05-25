@@ -3,6 +3,16 @@ import './App.css';
 import './components/circle.css';
 import Modal from './components/Modal';
 import Circle from './components/circle';
+import { ReactComponent as SpeakerOnIcon } from './SpeakerOnIcon.svg';
+import { ReactComponent as SpeakerOffIcon } from './SpeakerOffIcon.svg';
+
+
+/* import startGameSound from './sounds/startGame.mp3';
+import endGameSound from './sounds/endGame.mp3';
+import clickSound from './sounds/click.mp3'; */
+import backgroundMusic  from './sounds/backgroundMusic.mp3';
+
+const musicBackground = new Audio(backgroundMusic);
 
 class App extends Component {
   constructor(props) {
@@ -17,6 +27,7 @@ class App extends Component {
       pace: 800,
       timer: null,
       activeCircle: null,
+      isPlying: false,
       circles: [
         { id: 1, color: 'red' },
         { id: 2, color: 'yellow' },
@@ -27,6 +38,8 @@ class App extends Component {
 
     this.clickHandler = this.clickHandler.bind(this);
   }
+  
+
 
   getRndInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
@@ -39,6 +52,9 @@ class App extends Component {
     return this.pickNew(activeCircle);
   };
   startGame = () => {
+ 
+    musicBackground.play();
+    musicBackground.loop = true;
     this.setState({ gameRunning: true });
     let { rounds, pace, circles, activeCircle } = this.state; 
     const nextActive = this.pickNew(activeCircle); 
@@ -77,11 +93,22 @@ class App extends Component {
     }
     else{this.setState({score:this.state.score +10})}
     this.setState((prevState) => ({
-      pace: prevState.pace -10,
+      pace: prevState.pace -5,
     }));
     console.log(this.state.score,this.state.pace)
     
   };
+
+  musicHandler = () => {
+    const {isPlaying }= this.state;
+    if(isPlaying){
+      musicBackground.volume = 1;
+    }
+    else{
+      musicBackground.volume = 0;
+    }
+    this.setState({isPlaying: !isPlaying});
+  }
 
   render() {
 
@@ -114,6 +141,13 @@ class App extends Component {
              <button id="start" onClick={this.startGame}>
               Start Game
              </button>
+
+             <div onClick={this.musicHandler}>
+             {this.state.isPlaying ? <SpeakerOffIcon width="50" height="50" /> :<SpeakerOnIcon width="50" height="50" /> }
+            </div>
+            {/*  <div onClick={this.handleIconClick}>
+             {this.state.isPlaying ? <SpeakerOnIcon /> : <SpeakerOffIcon />}
+            </div> */}
               <button id="end" className="hidden">
                 End game
               </button>

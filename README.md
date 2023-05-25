@@ -1,6 +1,7 @@
 # Speed Mania
 
 This React app is a game where you have to click active circles to gain points and become Speed Maniac!
+Speed Maniac is certainly not a game for the faint-hearted; it's a high-speed, high-stakes challenge that tests your agility to its limits. Are you ready to take on the challenge and prove your mettle?
 
 ## Available Scripts
 
