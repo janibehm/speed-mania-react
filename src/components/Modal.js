@@ -1,17 +1,16 @@
 import styles from './Modal.module.css'
 
-const Modal = ({closeModal,score}) => {
-    return (  
+const Modal = ({ closeModal, score }) => {
+  return (
     <div className={styles.overlay}>
-    <div className={styles.modal}>
+      <div className={styles.modal}>
         <button className='close' onClick={closeModal}>X</button>
-      <p>Game Over!</p>
-      <p>Your score was <span>{score}</span></p>
-  </div>
-   </div> 
-  )
-  
+        <p>Game Over!</p>
+        <p>Your score was <span>{score}</span></p> 
+      </div>
+    </div>
+  );
 }
 
-export default Modal
+export default Modal;
 

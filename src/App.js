@@ -14,7 +14,7 @@ class App extends Component {
       showModal: false,
       active: 0,
       rounds: 0,
-      pace: 1000,
+      pace: 800,
       timer: null,
       activeCircle: null,
       circles: [
@@ -30,32 +30,32 @@ class App extends Component {
 
   getRndInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-  pickNew = (active) => {
-    const nextActiveNumber = this.getRndInt(0, 4);
-    if (nextActiveNumber !== active) {
+  pickNew = (activeCircle) => {
+    const nextActiveNumber = this.getRndInt(1, 4);
+    if (nextActiveNumber !== activeCircle) {
       return nextActiveNumber;
     }
 
-    return this.pickNew(active);
+    return this.pickNew(activeCircle);
   };
-
-
   startGame = () => {
-    this.setState({gameRunning:true})
-    let { active, rounds, pace, } = this.state;
-    const nextActive = this.pickNew(active);
-    active = nextActive;
-
+    this.setState({ gameRunning: true });
+    let { rounds, pace, circles, activeCircle } = this.state; 
+    const nextActive = this.pickNew(activeCircle); 
+  
     if (rounds >= 10) {
       return this.endGame();
     }
-
-    const timer = setTimeout(this.startGame,pace);
-    this.setState({timer,rounds:rounds +1,activeCircle:active})
-    console.log(rounds)
-    
+  
+    const timer = setTimeout(this.startGame, pace);
+    this.setState({ timer, rounds: rounds + 1, activeCircle: nextActive });
+    console.log(rounds);
+  
+    const activeCircleObject = circles.find((circle) => circle.id === nextActive); // find the circle with the nextActive id
+    if (activeCircleObject) {
+      console.log(activeCircleObject.color); 
+    }
   };
-
   endGame = () => {
     this.setState({timer: null, rounds: 10, activeCircle: null, showModal: true,gameRunning:false});
   };
@@ -76,6 +76,11 @@ class App extends Component {
       this.endGame();
     }
     else{this.setState({score:this.state.score +10})}
+    this.setState((prevState) => ({
+      pace: prevState.pace -10,
+    }));
+    console.log(this.state.score,this.state.pace)
+    
   };
 
   render() {
@@ -96,7 +101,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-        {this.state.showModal && <Modal closeModal={this.modalHandler} score={this.state.score} />}
+        {this.state.showModal && <Modal closeModal={this.modalHandler} score={this.state.score} />} 
           <div>
             <div>
               <h1>Speed Mania</h1>
