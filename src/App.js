@@ -95,7 +95,7 @@ class App extends Component {
    
   };
   endGame = () => {
-    this.setState({timer: null, rounds: 0, activeCircle: null, showModal: true,gameRunning:false});
+    this.setState({timer: null, rounds: 0, activeCircle: null, showModal: true, gameRunning:false, displayGo: false});
   };
 
   modalHandler = () => {
@@ -187,7 +187,7 @@ class App extends Component {
            
             </div>
             <div>
-            <p>
+            <p className='counter-container'>
               <span className="counter">
                 {this.state.counter > 0 ? this.state.counter : (this.state.displayGo ? "GO" : '')}
               </span>
