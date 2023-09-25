@@ -25,7 +25,7 @@ class App extends Component {
       volume: 0.5,
       timer: null,
       activeCircle: null,
-      isPlying: false,
+      isPlaying: false,
       counter:3,
       displayGo: false,
       circles: [
@@ -77,7 +77,7 @@ class App extends Component {
  
     musicBackground.play();
     musicBackground.loop = true;
-    this.setState({ gameRunning: true,displayGo:false });
+    this.setState({ gameRunning: true, displayGo:false,});
     let { rounds, pace, activeCircle } = this.state; 
     const nextActive = this.pickNew(activeCircle); 
   
@@ -126,14 +126,14 @@ class App extends Component {
   };
 
   musicHandler = () => {
-    const {isPlaying }= this.state;
+    const {isPlaying } = this.state;
+    this.setState({isPlaying: !isPlaying});
     if(isPlaying){
       musicBackground.volume = 1;
     }
     else{
       musicBackground.volume = 0;
     }
-    this.setState({isPlaying: !isPlaying});
   }
 
   handleVolumeChange = (event) => {
@@ -141,6 +141,8 @@ class App extends Component {
     musicBackground.volume = volume;
     this.setState({ volume });
   }
+
+
 
   render() {
 
@@ -203,6 +205,9 @@ class App extends Component {
               </button>
             </div>
             <div className="circles">{circleComponents} </div>
+            <div className='eq-bg'>
+              <div className="eq"></div>
+            </div>
         </header>
       </div>
     );

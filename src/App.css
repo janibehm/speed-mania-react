@@ -59,3 +59,17 @@ button {
     align-items: center;
     justify-content: center;
   }
+
+  #player-bg {
+    background: black;
+    padding: 0px;
+    margin: 0px;
+  }
+  
+  #player {
+    width: 80vw;
+    height: 60vh;
+    background: black;
+    margin: 20vh auto 0px auto;
+    display: block;
+  }
