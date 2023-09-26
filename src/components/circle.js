@@ -1,15 +1,14 @@
-import React from 'react'
-import './circle.css'
-        
+import React from "react";
+import "./circle.css";
+
 const Circle = ({ color, active, onClick, disabled }) => {
-    return (
-      <div
-        className={`circle ${color} ${active ? "active" : ""}`}
-        style={{ backgroundColor: color }}
-        onClick={!disabled ? onClick : null}
-      ></div>
-    );
-  };
+  return (
+    <div
+      className={`circle ${color} ${active ? "active" : ""}`}
+      style={{ backgroundColor: color }}
+      onClick={!disabled ? onClick : null}
+    ></div>
+  );
+};
 
-  export default Circle
-
+export default Circle;

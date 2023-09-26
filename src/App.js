@@ -5,10 +5,11 @@ import Modal from './components/Modal';
 import Circle from './components/circle';
 import { ReactComponent as SpeakerOnIcon } from './SpeakerOnIcon.svg';
 import { ReactComponent as SpeakerOffIcon } from './SpeakerOffIcon.svg';
-
-import backgroundMusic  from './sounds/backgroundMusic.mp3';
+import backgroundMusic from './sounds/backgroundMusic.mp3';
 import click from './sounds/click.wav';
-
+/* import AudioVisualizer from './components/AudioVisualizer'; */
+/* import ReactAudioSpectrum from 'react-audio-spectrum3';
+ */
 const musicBackground = new Audio(backgroundMusic);
 
 class App extends Component {
@@ -26,7 +27,7 @@ class App extends Component {
       timer: null,
       activeCircle: null,
       isPlaying: false,
-      counter:3,
+      counter: 3,
       displayGo: false,
       circles: [
         { id: 1, color: 'red' },
@@ -44,25 +45,23 @@ class App extends Component {
   }
 
   startCountDown = () => {
-    this.setState({counter:3});
+    this.setState({ counter: 3 });
     this.intervalId = setInterval(() => {
-      this.setState(prevState => {
-        if(prevState.counter < 1){
-          this.setState({displayGo:true});
+      this.setState((prevState) => {
+        if (prevState.counter < 1) {
+          this.setState({ displayGo: true });
           setTimeout(() => {
             this.startGame();
-          },1000)
-      
+          }, 1000);
+
           clearInterval(this.intervalId);
-        }
-        else{
-          return {counter:prevState.counter -1};
+        } else {
+          return { counter: prevState.counter - 1 };
         }
       });
-    },1000);
-  }
+    }, 1000);
+  };
 
-  
   getRndInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
   pickNew = (activeCircle) => {
@@ -74,37 +73,48 @@ class App extends Component {
     return this.pickNew(activeCircle);
   };
   startGame = () => {
- 
     musicBackground.play();
     musicBackground.loop = true;
-    this.setState({ gameRunning: true, displayGo:false,});
-    let { rounds, pace, activeCircle } = this.state; 
-    const nextActive = this.pickNew(activeCircle); 
-  
+    this.setState({ gameRunning: true, displayGo: false });
+    let { rounds, pace, activeCircle } = this.state;
+    const nextActive = this.pickNew(activeCircle);
+
     if (rounds >= 50) {
       return this.endGame();
     }
-  
+
     const timer = setTimeout(() => {
-      if(this.state.gameRunning){
+      if (this.state.gameRunning) {
         this.startGame();
       }
     }, pace);
 
-    this.setState({ timer, rounds: rounds + 1, activeCircle: nextActive });
-   
+    this.setState({
+      timer,
+      rounds: rounds + 1,
+      activeCircle: nextActive,
+      gameStarted: true,
+    });
   };
   endGame = () => {
-    this.setState({timer: null, rounds: 0, activeCircle: null, showModal: true, gameRunning:false, displayGo: false});
+    this.setState({
+      timer: null,
+      rounds: 0,
+      activeCircle: null,
+      showModal: true,
+      gameRunning: false,
+      displayGo: false,
+      pace: 800,
+    });
   };
 
   modalHandler = () => {
     this.setState({
       showModal: !this.state.showModal,
-      rounds:0,
-      score:0
-    })
-  }
+      rounds: 0,
+      score: 0,
+    });
+  };
 
   clickHandler = (id) => {
     if (!this.state.gameRunning) {
@@ -112,106 +122,109 @@ class App extends Component {
     }
     if (id !== this.state.activeCircle) {
       this.endGame();
-    }
-    else{
+    } else {
       const clickSound = new Audio(click);
       clickSound.play();
-      this.setState({score:this.state.score +10})
+      this.setState({ score: this.state.score + 10 });
     }
     this.setState((prevState) => ({
-      pace: prevState.pace -5,
+      pace: prevState.pace - 5,
     }));
-    console.log(this.state.score,this.state.pace)
-    
+    console.log(this.state.score, this.state.pace);
   };
 
   musicHandler = () => {
-    const {isPlaying } = this.state;
-    this.setState({isPlaying: !isPlaying});
-    if(isPlaying){
+    const { isPlaying } = this.state;
+    this.setState({ isPlaying: !isPlaying });
+    if (isPlaying) {
       musicBackground.volume = 1;
-    }
-    else{
+    } else {
       musicBackground.volume = 0;
     }
-  }
+  };
 
   handleVolumeChange = (event) => {
     const volume = event.target.value;
     musicBackground.volume = volume;
     this.setState({ volume });
-  }
-
-
+  };
 
   render() {
+    <audio id='music' src={musicBackground} />;
 
-    const {circles,activeCircle, gameRunning} = this.state;
+    const { circles, activeCircle, gameRunning } = this.state;
     const circleComponents = circles.map((item) => (
       <Circle
-      key={item.id}
-      color={activeCircle === item.id ? item.color : ''}
-      active={activeCircle === item.id}
-      id={item.id}
-      gameRunning={gameRunning}
-      onClick={gameRunning ? () => this.clickHandler(item.id) : null}
-      disabled={!gameRunning}
-    />
-    
+        key={item.id}
+        color={activeCircle === item.id ? item.color : ''}
+        active={activeCircle === item.id}
+        id={item.id}
+        gameRunning={gameRunning}
+        onClick={gameRunning ? () => this.clickHandler(item.id) : null}
+        disabled={!gameRunning}
+      />
     ));
     return (
-      <div className="App">
-        <header className="App-header">
-        {this.state.showModal && <Modal closeModal={this.modalHandler} score={this.state.score} />} 
+      <div className='App'>
+        <header className='App-header'>
+          {this.state.showModal && (
+            <Modal closeModal={this.modalHandler} score={this.state.score} />
+          )}
           <div>
             <div>
               <h1>Speed Mania</h1>
-              </div>
-              <div>
-        <label htmlFor="volume">Music Volume: </label>
-        <input
-          id="volume"
-          type="range"
-          min="0"
-          max="1"
-          step="0.01"
-          value={this.state.volume}
-          onChange={this.handleVolumeChange}
-        />
-      </div>
-      <div onClick={this.musicHandler}>
-             {this.state.isPlaying ? <SpeakerOffIcon width="50" height="50" /> :<SpeakerOnIcon width="50" height="50" /> }
-            </div>
-    
-              <p>
-                Score: <span className="score">{this.state.score}</span>
-              </p>
-           
             </div>
             <div>
+              <label htmlFor='volume'>Music Volume: </label>
+              <input
+                id='volume'
+                type='range'
+                min='0'
+                max='1'
+                step='0.01'
+                value={this.state.volume}
+                onChange={this.handleVolumeChange}
+              />
+            </div>
+            <div onClick={this.musicHandler}>
+              {this.state.isPlaying ? (
+                <SpeakerOffIcon width='50' height='50' />
+              ) : (
+                <SpeakerOnIcon width='50' height='50' />
+              )}
+            </div>
+
+            <p>
+              Score: <span className='score'>{this.state.score}</span>
+            </p>
+          </div>
+          <div>
             <p className='counter-container'>
-              <span className="counter">
-                {this.state.counter > 0 ? this.state.counter : (this.state.displayGo ? "GO" : '')}
+              <span className='counter'>
+                {this.state.counter > 0
+                  ? this.state.counter
+                  : this.state.displayGo
+                  ? 'GO'
+                  : ''}
               </span>
             </p>
-          
-             <button id="start" onClick={this.startCountDown}>
-              Start Game
-             </button>
 
-           
-              <button id="end" className="hidden">
-                End game
-              </button>
-            </div>
-            <div className="circles">{circleComponents} </div>
-            <div className='eq-bg'>
-              <div className="eq"></div>
-            </div>
+            <button
+              id='start'
+              onClick={this.startCountDown}
+              disabled={this.state.gameRunning}
+            >
+              Start Game
+            </button>
+
+            <button id='end' className='hidden'>
+              End game
+            </button>
+          </div>
+          <div className='circles'>{circleComponents} </div>
         </header>
       </div>
     );
   }
-
 }
 export default App;

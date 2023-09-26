@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=New+Rocker&display=swap');
 
-
 .App {
   text-align: center;
 }
@@ -15,8 +14,12 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-  background: rgb(34,193,195);
-  background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%); 
+  background: rgb(34, 193, 195);
+  background: linear-gradient(
+    0deg,
+    rgba(34, 193, 195, 1) 0%,
+    rgba(253, 187, 45, 1) 100%
+  );
 }
 
 * {
@@ -24,7 +27,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 
 button {
   font-size: inherit;
@@ -36,40 +38,26 @@ button {
   cursor: pointer;
 }
 
-#start{
+#start {
   margin: 2em;
 }
 
-.hidden{
+.hidden {
   display: none;
 }
 
 .circles {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 auto;
-    justify-content: space-between;
-   
-    height:30vh;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  justify-content: space-between;
 
-  .counter-container {
-    height: 50px; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  height: 30vh;
+}
 
-  #player-bg {
-    background: black;
-    padding: 0px;
-    margin: 0px;
-  }
-  
-  #player {
-    width: 80vw;
-    height: 60vh;
-    background: black;
-    margin: 20vh auto 0px auto;
-    display: block;
-  }
+.counter-container {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
