@@ -45,7 +45,7 @@ class App extends Component {
   }
 
   startCountDown = () => {
-    this.setState({ counter: 3 });
+    this.setState({ counter: 3, gameRunning: true });
     this.intervalId = setInterval(() => {
       this.setState((prevState) => {
         if (prevState.counter < 1) {
