@@ -7,10 +7,6 @@ import { ReactComponent as SpeakerOnIcon } from './SpeakerOnIcon.svg';
 import { ReactComponent as SpeakerOffIcon } from './SpeakerOffIcon.svg';
 import backgroundMusic from './sounds/backgroundMusic.mp3';
 import click from './sounds/click.wav';
-/* import AudioVisualizer from './components/AudioVisualizer'; */
-/* import ReactAudioSpectrum from 'react-audio-spectrum3';
- */
-const musicBackground = new Audio(backgroundMusic);
 
 class App extends Component {
   constructor(props) {
@@ -222,6 +218,7 @@ class App extends Component {
             </button>
           </div>
           <div className='circles'>{circleComponents} </div>
+          <AudioVisualizer />
         </header>
       </div>
     );
