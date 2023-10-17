@@ -218,7 +218,6 @@ class App extends Component {
             </button>
           </div>
           <div className='circles'>{circleComponents} </div>
-          <AudioVisualizer />
         </header>
       </div>
     );
