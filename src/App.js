@@ -5,7 +5,7 @@ import Modal from './components/Modal';
 import Circle from './components/circle';
 import { ReactComponent as SpeakerOnIcon } from './SpeakerOnIcon.svg';
 import { ReactComponent as SpeakerOffIcon } from './SpeakerOffIcon.svg';
-import backgroundMusic from './sounds/backgroundMusic.mp3';
+import musicBackground from './sounds/backgroundMusic.mp3';
 import click from './sounds/click.wav';
 
 class App extends Component {
