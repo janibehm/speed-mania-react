@@ -5,8 +5,10 @@ import Modal from './components/Modal';
 import Circle from './components/circle';
 import { ReactComponent as SpeakerOnIcon } from './SpeakerOnIcon.svg';
 import { ReactComponent as SpeakerOffIcon } from './SpeakerOffIcon.svg';
-import musicBackground from './sounds/backgroundMusic.mp3';
+import backgroundMusic from './sounds/backgroundMusic.mp3';
 import click from './sounds/click.wav';
+
+const musicBackground = new Audio(backgroundMusic);
 
 class App extends Component {
   constructor(props) {
