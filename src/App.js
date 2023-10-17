@@ -8,6 +8,8 @@ import { ReactComponent as SpeakerOffIcon } from './SpeakerOffIcon.svg';
 import musicBackground from './sounds/backgroundMusic.mp3';
 import click from './sounds/click.wav';
 
+const musicBackground = new Audio(backgroundMusic);
+
 class App extends Component {
   constructor(props) {
     super(props);
